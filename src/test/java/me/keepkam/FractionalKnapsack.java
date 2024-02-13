@@ -1,6 +1,7 @@
 package me.keepkam;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -10,6 +11,7 @@ import java.util.PriorityQueue;
 
 import static java.util.Comparator.comparingDouble;
 import static java.util.stream.IntStream.range;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
 class FractionalKnapsack {
@@ -103,6 +105,8 @@ class FractionalKnapsack {
         List<Pair> items = range(0, weights.length).mapToObj(i -> new Pair(weights[i], values[i])).toList();
         double maxWeight = Attempt_1.solution(items, weight);
 
+        assertEquals(input.expected, maxWeight, 0.1);
+
         log.info("Max weight: {}", maxWeight);
     }
 
@@ -128,10 +132,12 @@ class FractionalKnapsack {
         }
     }
 
-    private record Input(int[] weights, int[] values, int weight) {
+    private record Input(int[] weights, int[] values, int weight, double expected) {
     }
 
     private static List<Input> provideInputs() {
-        return List.of(new Input(new int[]{6, 1, 5, 3}, new int[]{3, 6, 1, 4}, 10), new Input(new int[]{20, 24, 36, 40, 42}, new int[]{12, 35, 41, 25, 32}, 100), new Input(new int[]{50, 40, 90, 120, 10, 200}, new int[]{40, 50, 25, 100, 30, 45}, 200));
+        return List.of(new Input(new int[]{6, 1, 5, 3}, new int[]{3, 6, 1, 4}, 10, 13),
+                new Input(new int[]{20, 24, 36, 40, 42}, new int[]{12, 35, 41, 25, 32}, 100, 106.48),
+                new Input(new int[]{50, 40, 90, 120, 10, 200}, new int[]{40, 50, 25, 100, 30, 45}, 200, 204));
     }
 }
