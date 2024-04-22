@@ -1,7 +1,7 @@
 package me.keepkam;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -58,15 +58,8 @@ class FractionalKnapsack {
             public List<Pair> items;
             private double weight;
             private final int maxWeight;
+            @Getter
             private double value;
-
-            public double getWeight() {
-                return weight;
-            }
-
-            public double getValue() {
-                return value;
-            }
 
             private void update() {
                 weight = items.stream().mapToDouble(p -> p.weight).sum();
@@ -113,6 +106,7 @@ class FractionalKnapsack {
     private static class Pair {
         public double weight;
         public double value;
+        @Getter
         public double ratio;
 
         public Pair(double w, double v) {
@@ -127,9 +121,6 @@ class FractionalKnapsack {
             return "Pair{" + "weight=" + weight + ", value=" + value + ", ratio=" + getRatio() + '}';
         }
 
-        public double getRatio() {
-            return ratio;
-        }
     }
 
     private record Input(int[] weights, int[] values, int weight, double expected) {
